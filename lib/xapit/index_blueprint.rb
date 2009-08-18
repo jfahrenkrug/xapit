@@ -124,9 +124,9 @@ module Xapit
     # Taken from thinking-sphinx
     def self.load_models
       if defined? Rails
-        base = "#{Rails.root}/app/models/"
-        Dir["#{base}**/*.rb"].each do |file|
-          model_name = file.gsub(/^#{base}([\w_\/\\]+)\.rb/, '\1')
+        # Search for model files in the standard Rails location and in the model dirs of all Radiant extens/ions
+        (Dir["#{Rails.root}/app/models/**/*.rb"] + Dir["#{Rails.root}/vendor/extensions/**/app/models/*.rb"]).each do |file|
+          model_name = File.basename(file, '.rb')
       
           next if model_name.nil?
           next if ::ActiveRecord::Base.send(:subclasses).detect { |model|
