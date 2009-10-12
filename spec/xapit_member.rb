@@ -20,9 +20,9 @@ class XapitMember
   def self.find(ids)
     if ids.kind_of? Array
       # change the order to mimic database where we can't predict the order
-      ids.sort.map { |id| @@records.detect { |r| r.id == id.to_i } }
+      ids.sort.map { |id| @@records.detect { |r| r.id.kind_of?(Numeric) ? r.id == id.to_i : r.id == id } }
     else
-      @@records.detect { |r| r.id == ids.to_i }
+      @@records.detect { |r| r.id.kind_of?(Numeric) ? r.id == ids.to_i : r.id == ids }
     end
   end
   
