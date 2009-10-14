@@ -9,8 +9,8 @@ module Xapit
       @target.find_by_id(id, *args)
     end
     
-    def find_multiple(ids)
-      @target.find(ids)
+    def find_multiple(ids, *args)
+      @target.find(ids, *args)
     end
     
     def find_each(*args, &block)

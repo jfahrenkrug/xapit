@@ -6,6 +6,7 @@ module Xapit
     attr_reader :field_attributes
     attr_reader :sortable_attributes
     attr_reader :facets
+    attr_reader :args
     
     # Indexes all classes known to have an index blueprint defined.
     def self.index_all
