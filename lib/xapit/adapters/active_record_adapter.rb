@@ -10,7 +10,7 @@ module Xapit
     end
     
     def find_multiple(ids, *args)
-      if (args and args.kind_of?(Array))
+      if (args and args.kind_of?(Array) and args.size > 0)
         args[0].delete(:conditions)
       end
       
