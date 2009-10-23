@@ -5,11 +5,19 @@ module Xapit
     end
     
     def add_member(member)
-      database.add_document(document_for(member))
+      begin
+        database.add_document(document_for(member))
+      rescue StandardError => err
+        warn "Failed to add member #{member.id.inspect} to Xapian index: #{err}"
+      end
     end
     
     def update_member(member)
-      database.replace_document("Q#{member.class}-#{member.id}", document_for(member))
+      begin
+        database.replace_document("Q#{member.class}-#{member.id}", document_for(member))
+      rescue StandardError => err
+        warn "Failed to update member #{member.id.inspect} in Xapian index: #{err}"
+      end
     end
     
     def document_for(member)

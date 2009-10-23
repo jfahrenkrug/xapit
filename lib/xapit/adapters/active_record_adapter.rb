@@ -19,7 +19,11 @@ module Xapit
     
     def find_each(*args, &block)
       records = @target.find(:all, *args)
-      records.each { |record| yield record }
+      RAILS_DEFAULT_LOGGER.info("  #{records.size} records to index...")
+      records.each do |record| 
+        RAILS_DEFAULT_LOGGER.debug("  Indexing #{record.id.to_s}...")
+        yield record 
+      end
     end
   end
 end

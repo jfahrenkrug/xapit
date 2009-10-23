@@ -4,6 +4,7 @@ unless @xapit_rake_loaded
   namespace :xapit do
     desc "Index all xapit models."
     task :index => :environment do
+      RAILS_DEFAULT_LOGGER.auto_flushing = true
       Xapit.remove_database
       Xapit.index_all do |member_class|
         puts "Indexing #{member_class.name}"
