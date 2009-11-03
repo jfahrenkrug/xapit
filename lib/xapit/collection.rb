@@ -174,7 +174,7 @@ module Xapit
         records_by_class[class_name] << id
       end
       records_by_class.each do |class_name, ids|
-        records_by_class[class_name] = class_name.constantize.xapit_adapter.find_multiple(ids, *class_name.constantize.xapit_index_blueprint.args)
+        records_by_class[class_name] = class_name.constantize.xapit_adapter.find_multiple(ids, @query_parser.options)
       end
       matches.map do |match|
         class_name, id = match.document.data.split('-')
