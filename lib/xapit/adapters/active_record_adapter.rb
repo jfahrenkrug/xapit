@@ -14,7 +14,11 @@ module Xapit
         args[0].delete(:conditions)
       end
       
-      @target.find(ids, *args)
+      args[0] ||= {}
+      
+      args[0][:conditions] = ["id IN (?)", ids]
+      
+      @target.find(:all, *args)
     end
     
     def find_each(*args, &block)
