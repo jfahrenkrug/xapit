@@ -59,7 +59,7 @@ module Xapit
           elsif value.kind_of? Date
             value = value.to_time.to_i
           end
-          "X#{name}-#{value.to_s.downcase}"
+          "X#{name}-#{value.to_s.xapit_utf8_downcase}"
         end
       end.flatten
     end
@@ -75,9 +75,9 @@ module Xapit
       @blueprint.text_attributes.map do |name, options|
         content = member.send(name).to_s
         if options[:proc]
-          options[:proc].call(content).reject(&:blank?).map(&:to_s).map(&:downcase)
+          options[:proc].call(content).reject(&:blank?).map(&:to_s).map(&:xapit_utf8_downcase)
         else
-          content.scan(/\w+/u).map(&:downcase)
+          content.scan(/\w+/u).map(&:xapit_utf8_downcase)
         end
       end.flatten
     end

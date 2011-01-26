@@ -100,14 +100,14 @@ module Xapit
         nil
       else
         return term_suggestion(@search_text) unless term_suggestion(@search_text).blank?
-        @search_text.downcase.gsub(/\w+/) do |term|
+        @search_text.xapit_utf8_downcase.gsub(/\w+/) do |term|
           term_suggestion(term) || term
         end
       end
     end
     
     def term_suggestion(term)
-      suggestion = Config.database.get_spelling_suggestion(term.downcase)
+      suggestion = Config.database.get_spelling_suggestion(term.xapit_utf8_downcase)
       suggestion.blank? ? nil : suggestion
     end
     
@@ -158,14 +158,14 @@ module Xapit
         elsif value.kind_of? Date
           value = value.to_time.to_i
         end
-        "X#{name}-#{value.to_s.downcase}"
+        "X#{name}-#{value.to_s.xapit_utf8_downcase}"
       end
     end
     
     # Expands the wildcard in the term (just at the end) and returns a query
     # which will match any term that starts with the given term.
     def wildcard_query(term, prefix = "")
-      full_term = (prefix + term.downcase).sub(/\*$/, '') # remove asterisk at end if it exists
+      full_term = (prefix + term.xapit_utf8_downcase).sub(/\*$/, '') # remove asterisk at end if it exists
       parser = Xapian::QueryParser.new
       parser.database = Xapit::Config.database
       parser.parse_query(full_term[-1..-1], Xapian::QueryParser::FLAG_PARTIAL, full_term[0..-2])

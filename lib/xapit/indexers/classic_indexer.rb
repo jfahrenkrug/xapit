@@ -5,9 +5,9 @@ module Xapit
       @blueprint.text_attributes.each do |name, options|
         content = member.send(name)
         if options[:proc]
-          index_terms(options[:proc].call(content.to_s).reject(&:blank?).map(&:to_s).map(&:downcase), document)
+          index_terms(options[:proc].call(content.to_s).reject(&:blank?).map(&:to_s).map(&:xapit_utf8_downcase), document)
         elsif content.kind_of? Array
-          index_terms(content.reject(&:blank?).map(&:to_s).map(&:downcase), document)
+          index_terms(content.reject(&:blank?).map(&:to_s).map(&:xapit_utf8_downcase), document)
         else
           term_generator.index_text(content.to_s)
         end

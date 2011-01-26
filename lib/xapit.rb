@@ -2,6 +2,22 @@ require 'digest/sha1'
 require 'rubygems'
 require 'xapian'
 
+# hack to convert iso-8859-15 strings to utf-8 and downcase them safely
+class String
+  def xapit_utf8_downcase
+    # is it  a non unicode string?
+    if self.size == self.mb_chars.size
+      # lets try to convert it
+      begin
+        return Iconv.iconv('UTF-8//IGNORE//TRANSLIT', 'ISO-8859-15', self)[0].mb_chars.downcase.to_s
+      rescue Exception
+      end
+    end
+
+    self.mb_chars.downcase.to_s
+  end
+end
+
 # Looking for more documentation? A good place to start is Xapit::Membership
 module Xapit
   # Index all membership classes with xapit defined. Delegates to Xapit::IndexBlueprint.
