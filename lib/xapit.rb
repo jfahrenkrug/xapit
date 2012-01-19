@@ -6,7 +6,7 @@ require 'xapian'
 class String
   def xapit_utf8_downcase
     # is it  a non unicode string?
-    if self.size == self.mb_chars.size
+    if RUBY_VERSION < "1.9" and self.size == self.mb_chars.size
       # lets try to convert it
       begin
         return Iconv.iconv('UTF-8//IGNORE//TRANSLIT', 'ISO-8859-15', self)[0].mb_chars.downcase.to_s
