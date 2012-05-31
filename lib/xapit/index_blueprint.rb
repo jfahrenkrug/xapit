@@ -11,7 +11,8 @@ module Xapit
     # Indexes all classes known to have an index blueprint defined.
     def self.index_all
       load_models
-      @@instances.each do |member_class, blueprint|
+      tmp_instances = @@instances.clone
+      tmp_instances.each do |member_class, blueprint|
         yield(member_class) if block_given?
         blueprint.index_all
       end
