@@ -127,7 +127,7 @@ module Xapit
     def self.load_models
       if defined? Rails
         # Search for model files in the standard Rails location and in the model dirs of all Radiant extens/ions
-        (Dir["#{Rails.root}/app/models/**/*.rb"] + Dir["#{Rails.root}/vendor/extensions/**/app/models/*.rb"]).each do |file|
+        (Dir.glob("#{Rails.root}/app/models/**/*.rb", File::FNM_CASEFOLD) + Dir.glob("#{Rails.root}/vendor/extensions/**/app/models/*.rb", File::FNM_CASEFOLD)).each do |file|
           model_name = File.basename(file, '.rb')
       
           next if model_name.nil?
