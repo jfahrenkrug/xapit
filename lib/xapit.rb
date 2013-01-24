@@ -1,6 +1,7 @@
 require 'digest/sha1'
 require 'rubygems'
 require 'xapian'
+require "unicode_utils/upcase" if RUBY_VERSION > "1.9"
 
 # hack to convert iso-8859-15 strings to utf-8 and downcase them safely
 class String
@@ -12,9 +13,9 @@ class String
         return Iconv.iconv('UTF-8//IGNORE//TRANSLIT', 'ISO-8859-15', self)[0].mb_chars.downcase.to_s
       rescue Exception
       end
+    else
+      return UnicodeUtils.downcase(self)
     end
-
-    self.mb_chars.downcase.to_s
   end
 end
 
