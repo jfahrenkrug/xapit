@@ -96,11 +96,11 @@ module Xapit
     
     def spelling_suggestion
       raise "Spelling has been disabled. Enable spelling in Xapit.setup." unless Config.spelling?
-      if [@search_text, *@search_text.scan(/\w+/)].all? { |term| term_suggestion(term).nil? }
+      if [@search_text, *@search_text.scan(/\p{Word}+/)].all? { |term| term_suggestion(term).nil? }
         nil
       else
         return term_suggestion(@search_text) unless term_suggestion(@search_text).blank?
-        @search_text.xapit_utf8_downcase.gsub(/\w+/) do |term|
+        @search_text.xapit_utf8_downcase.gsub(/\p{Word}+/) do |term|
           term_suggestion(term) || term
         end
       end

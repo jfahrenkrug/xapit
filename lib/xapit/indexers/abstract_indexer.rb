@@ -77,7 +77,7 @@ module Xapit
         if options[:proc]
           options[:proc].call(content).reject(&:blank?).map(&:to_s).map(&:xapit_utf8_downcase)
         else
-          content.scan(/\w+/u).map(&:xapit_utf8_downcase)
+          content.scan(/\p{Word}+/u).map(&:xapit_utf8_downcase)
         end
       end.flatten
     end

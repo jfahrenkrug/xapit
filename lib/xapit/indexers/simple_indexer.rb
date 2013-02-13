@@ -27,7 +27,7 @@ module Xapit
       elsif content.kind_of? Array
         content.reject(&:blank?).map(&:to_s).map(&:xapit_utf8_downcase)
       else
-        content.to_s.scan(/\w+/u).map(&:xapit_utf8_downcase)
+        content.to_s.scan(/\p{Word}+/u).map(&:xapit_utf8_downcase)
       end
     end
     
